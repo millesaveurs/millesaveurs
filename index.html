@@ -9,7 +9,7 @@
         :root { --primary: #e67e22; --dark: #1a1a1a; --grey: #f4f4f4; --success: #25D366; }
         body { font-family: 'Poppins', sans-serif; margin: 0; scroll-behavior: smooth; background: var(--grey); }
         
-        /* HEADER GÉANT AVEC TON LOGO CANVA */
+        /* HEADER GÉANT AVEC LOGO */
         header { 
             height: 100vh; 
             background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://i.pinimg.com/736x/85/f8/47/85f847274fff6f4b49454c5e8aa652e3.jpg');
@@ -52,9 +52,24 @@
         .about-text { font-size: 1.2rem; color: #555; line-height: 1.8; margin-bottom: 30px; }
         
         .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px; margin-top: 30px; }
-        .info-card { background: var(--grey); padding: 25px; border-radius: 20px; border-top: 4px solid var(--primary); transition: 0.3s; }
+        .info-card { background: var(--grey); padding: 25px 15px; border-radius: 20px; border-top: 4px solid var(--primary); transition: 0.3s; word-wrap: break-word; overflow: hidden; }
         .info-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
         .info-card strong { display: block; color: var(--dark); margin-bottom: 10px; font-size: 1rem; }
+        
+        .phone-container {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            align-items: center;
+            justify-content: center;
+        }
+        .phone-number { 
+            display: block; 
+            font-weight: 600; 
+            font-size: clamp(0.85rem, 1.2vw, 1.05rem); 
+            word-break: break-word;
+            line-height: 1.4;
+        }
 
         .category-header { background: var(--dark); color: white; padding: 30px; text-align: center; font-size: 2.5rem; font-weight: 800; margin-top: 60px; border-bottom: 6px solid var(--primary); position: sticky; top: 0; z-index: 100; }
         .container { max-width: 1200px; margin: auto; padding: 20px; }
@@ -85,7 +100,7 @@
         footer { background: var(--dark); color: white; padding: 80px 20px; text-align: center; }
         .maps-btn { display: inline-block; background: #4285F4; color: white; padding: 14px 30px; border-radius: 50px; text-decoration: none; font-weight: 600; margin-top: 20px; transition: 0.3s; }
         .maps-btn:hover { background: #357ae8; transform: scale(1.05); }
- </style>
+    </style>
 </head>
 <body>
 
@@ -108,7 +123,10 @@
                 </div>
                 <div class="info-card">
                     <strong>📞 NOUS CONTACTER</strong>
-                    +223 79 13 85 38 / +223 75 27 94 20
+                    <div class="phone-container">
+                        <span class="phone-number">+223 79 13 85 38</span>
+                        <span class="phone-number">+223 75 27 94 20</span>
+                    </div>
                 </div>
                 <div class="info-card">
                     <strong>🕒 NOS HORAIRES</strong>
@@ -265,15 +283,15 @@
                 <input type="tel" id="client-phone" placeholder="Numéro de téléphone *" required>
                 <input type="text" id="client-address" placeholder="Quartier / Adresse exacte de livraison *" required>
                 <textarea id="client-notes" rows="3" placeholder="Instructions particulières (ex: sans piment, couteaux...)"></textarea>
-                <button type="submit" class="btn-wa">📲 Commander sur WhatsApp</button>
+                <button type="submit" class="btn-wa">Commander sur WhatsApp</button>
             </form>
         </div>
     </div>
 
     <footer>
-        <h3>MILLES SAVEURS BAMAKO</h3>
+        <h3>MILLES SAVEURS</h3>
         <p>Missabougou, près de l'Hôpital du Mali, Bamako</p>
-        <p>Téléphone / WhatsApp : +223 79 13 85 38 / +223 75 27 94 20</p>
+        <p>Téléphone / WhatsApp : <span class="phone-number">+223 79 13 85 38 / +223 75 27 94 20</span></p>
         <a href="https://maps.google.com/?q=Missabougou+Bamako+Mali" target="_blank" class="maps-btn">📍 Voir sur Google Maps</a>
     </footer>
 
@@ -348,21 +366,21 @@
             let total = subtotal + DELIVERY_FEE;
 
             let message = `*NOUVELLE COMMANDE - MILLES SAVEURS*\n\n`;
-            message += `👤 *Nom :* ${name}\n`;
-            message += `📞 *Tél :* ${phone}\n`;
-            message += `📍 *Adresse :* ${address}\n`;
+            message += `*Nom :* ${name}\n`;
+            message += `*Tél :* ${phone}\n`;
+            message += `*Adresse :* ${address}\n`;
             if (notes.trim()) {
-                message += `📝 *Notes :* ${notes}\n`;
+                message += `*Notes :* ${notes}\n`;
             }
             message += `\n--- *DÉTAILS DE LA COMMANDE* ---\n`;
 
             cart.forEach(item => {
-                message += `• ${item.name} x${item.qty} = ${(item.price * item.qty).toLocaleString()} FCFA\n`;
+                message += `- ${item.name} x${item.qty} = ${(item.price * item.qty).toLocaleString()} FCFA\n`;
             });
 
-            message += `\n💰 *Sous-total :* ${subtotal.toLocaleString()} FCFA\n`;
-            message += `🚚 *Frais de livraison :* ${DELIVERY_FEE.toLocaleString()} FCFA\n`;
-            message += `👉 *TOTAL À PAYER : ${total.toLocaleString()} FCFA*`;
+            message += `\n*Sous-total :* ${subtotal.toLocaleString()} FCFA\n`;
+            message += `*Frais de livraison :* ${DELIVERY_FEE.toLocaleString()} FCFA\n`;
+            message += `*TOTAL À PAYER : ${total.toLocaleString()} FCFA*`;
 
             const phoneNum = "22379138538";
             const whatsappUrl = `https://wa.me/${phoneNum}?text=${encodeURIComponent(message)}`;
